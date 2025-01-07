@@ -5,18 +5,20 @@ services:
       context: ./website
       dockerfile: Dockerfile
     image: '${WEBSITE_IMAGE}'
+    # This container builds your React files into /website/dist
     volumes:
-      - website:/PetProject/website
-    # ...
+      - dist:/website/dist
+    command: sh -c "npm run build && tail -f /dev/null"
 
   nginx:
     build:
       context: ./nginx
       dockerfile: Dockerfile
     image: '${NGINX_IMAGE}'
+    ports:
+      - '80:80'
     volumes:
-      - website:/PetProject/nginx
-    # ...
+      - dist:/usr/share/nginx/html
 
 volumes:
-  website:
+  dist:

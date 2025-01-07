@@ -1,3 +1,5 @@
+version: '3.8'
+
 services:
   website:
     image: '${WEBSITE_IMAGE}'
@@ -5,6 +7,7 @@ services:
     restart: unless-stopped
     environment:
       - NODE_ENV=production
+    # If your website service exposes ports, define them here
     # ports:
     #   - "3000:3000"
 
@@ -17,7 +20,7 @@ services:
     depends_on:
       - website
     volumes:
-      - website:/usr/share/nginx/html
+      - website:/usr/share/nginx/html/website
     environment:
       - NGINX_HOST=localhost
       - NGINX_PORT=80

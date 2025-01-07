@@ -13,7 +13,7 @@ env:
 jobs:
   build:
     name: Build the Docker Image
-    runs-on: ubuntu-latest
+    runs-on: docker compose -f docker-compose.ci.yml build
 
     steps:
       - name: checkout main
@@ -43,7 +43,7 @@ jobs:
           docker push ${{ env.NGINX_IMAGE }}
   checking-secrets:
     name: Checking secrets
-    runs-on: ubuntu-latest
+    runs-on: docker compose -f docker-compose.ci.yml build
     needs: build
     outputs:
       secret_key_exists: ${{steps.check_secrets.outputs.defined}}
@@ -59,7 +59,7 @@ jobs:
           fi
   deploy:
     name: Deploy to AWS EC2
-    runs-on: ubuntu-latest
+    runs-on: docker compose -f docker-compose.ci.yml build
     needs: checking-secrets
     if: needs.checking-secrets.outputs.secret_key_exists == 'true'
     steps:

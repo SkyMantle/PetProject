@@ -30,6 +30,11 @@ jobs:
           username: ${{ secrets.NAMESPACE }}
           password: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
 
+      - name: Debug website folder
+        run: |
+          echo "List website folder"
+          ls -al website
+
       - name: Install docker-compose
         run: |
           sudo apt-get update

@@ -6,7 +6,7 @@ services:
     ports:
       - '3000:3000'
     volumes:
-      - website:PetProject/website/Dockerfile #* build files will be added at this directory !!!
+      - website:PetProject/website/ #* build files will be added at this directory !!!
 
   nginx:
     container_name: 'nginx'

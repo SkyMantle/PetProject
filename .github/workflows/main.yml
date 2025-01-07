@@ -30,6 +30,11 @@ jobs:
           username: ${{ secrets.NAMESPACE }}
           password: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
 
+      - name: Install docker-compose
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y docker-compose
+
       - name: Pull images
         run: |
           docker pull ${{ env.WEBSITE_IMAGE }} || true

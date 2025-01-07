@@ -14,7 +14,7 @@ services:
     ports:
       - '80:80'
     volumes:
-      - website:/PetProject/nginx/html/website #* Copy React App's build files to the Nginx directory
+      - website:/PetProject/nginx/html/website/ #* Copy React App's build files to the Nginx directory
 
 volumes:
   website:

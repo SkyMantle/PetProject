@@ -6,7 +6,7 @@ services:
       dockerfile: Dockerfile
     volumes:
       #* We'll store the final 'dist' folder in a named volume
-      - website:/PetProject/website/Dockerfile
+      - website:/PetProject/website/
     #* This container might not expose any port if it's only for building
     command: sh -c "npm run build && tail -f /dev/null"
 
@@ -18,7 +18,7 @@ services:
       - '80:80'
     volumes:
       #* Mount the 'dist' folder into /usr/share/nginx/html/website
-      - website:/PetProject/nginx/html/website
+      - website:/PetProject/nginx/html/website/
 
 volumes:
   website:

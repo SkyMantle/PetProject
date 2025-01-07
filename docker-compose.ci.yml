@@ -15,7 +15,7 @@ services:
       dockerfile: Dockerfile
     image: '${NGINX_IMAGE}'
     volumes:
-      - website:/PetProject/nginx/Dockerfile
+      - nginx:/PetProject/nginx/Dockerfile
     # ...
 
 volumes:

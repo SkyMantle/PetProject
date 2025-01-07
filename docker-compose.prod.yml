@@ -1,26 +1,29 @@
-version: '3'
+version: '3.8'
+
 services:
   website:
     image: '${WEBSITE_IMAGE}'
-    # If you need to run a build command here, or if you have a multi-stage Dockerfile that
-    # already produces a final (NGINX-based) image, adapt accordingly.
-    # For a final image that serves static files, you might not need a separate NGINX container.
     container_name: 'website'
-    # This container might not expose ports if it's only for building or if the final image
-    # is an NGINX-based container that serves the site.
-    command: sh -c "npm run build && tail -f /dev/null"
-    volumes:
-      - website:/website/dist
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+    # If your website service exposes ports, define them here
+    # ports:
+    #   - "3000:3000"
 
   nginx:
     image: '${NGINX_IMAGE}'
     container_name: 'nginx'
+    restart: unless-stopped
     ports:
       - '80:80'
     depends_on:
       - website
     volumes:
-      - website:/usr/share/nginx/html
+      - website:/usr/share/nginx/html/website
+    environment:
+      - NGINX_HOST=localhost
+      - NGINX_PORT=80
 
 volumes:
   website:

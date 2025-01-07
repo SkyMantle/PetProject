@@ -6,7 +6,7 @@ services:
     ports:
       - '3000:3000'
     volumes:
-      - website:./website/dist #* build files will be added at this directory !!!
+      - website:PetProject/website/Dockerfile #* build files will be added at this directory !!!
 
   nginx:
     container_name: 'nginx'
@@ -14,7 +14,7 @@ services:
     ports:
       - '80:80'
     volumes:
-      - website:/usr/share/nginx/html/website #* Copy React App's build files to the Nginx directory
+      - website:/PetProject/nginx/html/website #* Copy React App's build files to the Nginx directory
 
 volumes:
   website:

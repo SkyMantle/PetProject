@@ -5,7 +5,10 @@ services:
       context: ./website
       dockerfile: Dockerfile
     volumes:
-      - website:/website/build/ # build files will be added at this directory !!!
+      #* We'll store the final 'dist' folder in a named volume
+      - website:/website/dist
+    #* This container might not expose any port if it's only for building
+    command: sh -c "npm run build && tail -f /dev/null"
 
   nginx:
     build:
@@ -14,7 +17,8 @@ services:
     ports:
       - '80:80'
     volumes:
-      - website:/usr/share/nginx/html/website # Copy React  App's build files to the Nginx directory
+      #* Mount the 'dist' folder into /usr/share/nginx/html/website
+      - website:/usr/share/nginx/html/website
 
 volumes:
   website:

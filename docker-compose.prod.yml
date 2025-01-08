@@ -18,7 +18,7 @@ services:
     depends_on:
       - website
     volumes:
-      - dist:/usr/share/nginx/html
+      - website:/usr/share/nginx/html
     environment:
       - NGINX_HOST=localhost
       - NGINX_PORT=80

@@ -74,6 +74,9 @@ jobs:
             echo "defined=false" >> $GITHUB_OUTPUT
           fi
 
+      - name: Debug NAMESPACE
+        run: echo "NAMESPACE is ${{ secrets.NAMESPACE }}"
+
   deploy:
     name: Deploy to AWS EC2
     runs-on: ubuntu-latest

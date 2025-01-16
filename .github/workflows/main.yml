@@ -152,5 +152,5 @@ jobs:
 
       - name: Build and push images
         run: |
-          docker build -t ghcr.io/skymantle/petproject/website ./website
-          docker push ghcr.io/skymantle/petproject/website
+          docker build -t ghcr.io/SkyMantle/PetProject/website ./website
+          docker push ghcr.io/SkyMantle/PetProject/website

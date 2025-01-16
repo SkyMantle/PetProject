@@ -100,9 +100,9 @@ jobs:
         run: |
           ssh-add -l
 
-      - name: Test SSH Connection
-        run: |
-          ssh -A -o StrictHostKeyChecking=no ${{ secrets.AWS_HOST_USER }}@${{ secrets.AWS_EC2_IP_ADDRESS }} 'echo "SSH connection successful."'
+      # - name: Test SSH Connection
+      #   run: |
+      #     ssh -A -o StrictHostKeyChecking=no ${{ secrets.AWS_HOST_USER }}@${{ secrets.AWS_EC2_IP_ADDRESS }} 'echo "SSH connection successful."'
 
       - name: Deploy images on AWS EC2
         env:

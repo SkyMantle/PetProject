@@ -111,7 +111,7 @@ jobs:
 
       - name: Copy .env and docker-compose.prod.yml to EC2
         run: |
-          scp -A -o StrictHostKeyChecking=no -r ./.env docker-compose.prod.yml ${{ secrets.AWS_HOST_USER }}@${{ secrets.AWS_EC2_IP_ADDRESS }}:/home/${{ secrets.AWS_HOST_USER }}/
+          scp -A -o StrictHostKeyChecking=no -r .env docker-compose.prod.yml ${{ secrets.AWS_HOST_USER }}@${{ secrets.AWS_EC2_IP_ADDRESS }}:/home/${{ secrets.AWS_HOST_USER }}/
 
       - name: Deploy images on AWS EC2
         run: |

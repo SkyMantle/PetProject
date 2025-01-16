@@ -91,11 +91,6 @@ jobs:
           echo NAMESPACE=${{ secrets.NAMESPACE }} >> .env
           echo PERSONAL_ACCESS_TOKEN=${{ secrets.PERSONAL_ACCESS_TOKEN }} >> .env
 
-      - name: Debug Secrets (for testing only, remove sensitive data afterward)
-        run: |
-          echo "AWS_HOST_USER: ${{ secrets.AWS_HOST_USER }}"
-          echo "AWS_EC2_IP_ADDRESS: ${{ secrets.AWS_EC2_IP_ADDRESS }}"
-
       - name: Set up SSH Agent and Add Private Key
         uses: webfactory/ssh-agent@v0.5.3
         with:
@@ -104,6 +99,11 @@ jobs:
       - name: Verify SSH Agent
         run: |
           ssh-add -l
+
+      - name: Debug Secrets (for testing only, remove sensitive data afterward)
+        run: |
+          echo "AWS_HOST_USER: ${{ secrets.AWS_HOST_USER }}"
+          echo "AWS_EC2_IP_ADDRESS: ${{ secrets.AWS_EC2_IP_ADDRESS }}"
 
       - name: Test SSH Connection
         run: |

@@ -100,9 +100,9 @@ jobs:
         run: |
           ssh-add -l
 
-      # - name: Test SSH Connection
-      #   run: |
-      #     scp -A -o StrictHostKeyChecking=no -r ./.env docker-compose.prod.yml ${{ secrets.AWS_HOST_USER }}@${{ secrets.AWS_EC2_IP_ADDRESS }}:/home/${{ secrets.AWS_HOST_USER }}/
+      - name: Test SSH Connection
+        run: |
+          scp -A -o StrictHostKeyChecking=no -r ./.env docker-compose.prod.yml ${{ secrets.AWS_HOST_USER }}@${{ secrets.AWS_EC2_IP_ADDRESS }}:/home/${{ secrets.AWS_HOST_USER }}/
 
       - name: Deploy images on AWS EC2
         env:

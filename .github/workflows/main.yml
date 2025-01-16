@@ -135,10 +135,9 @@ jobs:
           # Bring down any existing containers
           docker-compose down --rmi all -v
 
-          # Log in to the container registry using --password-stdin
           echo "${{ secrets.PERSONAL_ACCESS_TOKEN }}" | docker login ghcr.io -u ${{ secrets.NAMESPACE }} --password-stdin
 
-          # Pull the latest images (ensure your .env contains valid WEBSITE_IMAGE and NGINX_IMAGE)
+           # Pull the latest images
           docker-compose --env-file=.env -f docker-compose.prod.yml pull
 
           # Start the containers

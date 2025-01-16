@@ -120,24 +120,33 @@ jobs:
 
           # Run Docker Compose commands on the remote EC2 server
           ssh -A -o StrictHostKeyChecking=no ${{ secrets.AWS_HOST_USER }}@${{ secrets.AWS_EC2_IP_ADDRESS }} <<EOF
-            cd /home/${{ secrets.AWS_HOST_USER }}/
-            
-            # Ensure Docker Compose is installed
-            if ! command -v docker-compose >/dev/null 2>&1; then
-                echo "docker-compose not found. Installing..."
-                sudo curl -SL "https://github.com/docker/compose/releases/download/v2.20.2/docker-compose-linux-x86_64" -o /usr/local/bin/docker-compose
-                sudo chmod +x /usr/local/bin/docker-compose
-            fi
-            
-            # Optional: Use Docker Compose V2 (if installed as a plugin)
-            # Replace `docker-compose` with `docker compose` in commands below if using V2
-            
-            docker-compose down --rmi all -v
-            echo "${{ secrets.PERSONAL_ACCESS_TOKEN }}" | docker login ghcr.io -u ${{ secrets.NAMESPACE }} --password-stdin
-            docker-compose --env-file=.env -f docker-compose.prod.yml pull
-            docker-compose --env-file=.env -f docker-compose.prod.yml up -d
-            docker logout
-            EOF
+          cd /home/${{ secrets.AWS_HOST_USER }}
+          # Check if docker-compose is installed
+          if ! command -v docker-compose >/dev/null 2>&1; then
+          echo "docker-compose not found. Installing..."
+          sudo curl -SL "https://github.com/docker/compose/releases/download/v2.20.2/docker-compose-linux-x86_64" -o /usr/local/bin/docker-compose
+          sudo chmod +x /usr/local/bin/docker-compose
+          fi
+          # Optionally, ensure the installation directory is in PATH
+          export PATH=\$PATH:/usr/local/bin
+          # Print version for debugging
+          docker-compose --version
+
+          # Bring down any existing containers
+          docker-compose down --rmi all -v
+
+          # Log in to the container registry using --password-stdin
+          echo "${{ secrets.PERSONAL_ACCESS_TOKEN }}" | docker login ghcr.io -u ${{ secrets.NAMESPACE }} --password-stdin
+
+          # Pull the latest images (ensure your .env contains valid WEBSITE_IMAGE and NGINX_IMAGE)
+          docker-compose --env-file=.env -f docker-compose.prod.yml pull
+
+          # Start the containers
+          docker-compose --env-file=.env -f docker-compose.prod.yml up -d
+
+          # Log out from Docker registry
+          docker logout
+          EOF
 
       - name: Build and push images
         run: |

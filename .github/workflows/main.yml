@@ -5,9 +5,13 @@ on:
     branches: [main]
 
 env:
-  WEBSITE_IMAGE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/website
-  NGINX_IMAGE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/nginx
   REGISTRY: ghcr.io
+
+  steps:
+    name: Set environment variables
+    run: |
+      echo "WEBSITE_IMAGE=${{ env.REGISTRY }}/skymantle/petproject/website" >> $GITHUB_ENV
+      echo "NGINX_IMAGE=${{ env.REGISTRY }}/skymantle/petproject/nginx" >> $GITHUB_ENV
 
 jobs:
   build:
